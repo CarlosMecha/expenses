@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <!-- Libraries -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/select2/4.0.3/css/select2.min.css"/>
+    <link rel="stylesheet" href="/css/web.css"/>
+    <link rel="stylesheet" href="/css/index.css"/>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/select2/4.0.3/js/select2.min.js"></script>
+    <script src="/js/web.js"></script>
+    <script src="/js/index.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Bank</title>
+
+</head>
+<body>
+
+    <div th:include="fragments/header :: header"></div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">My last expenses</h3>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th><span class="glyphicon glyphicon-usd" aria-hidden="true"></span></th>
+                    <th>Category</th>
+                    <th><span class="glyphicon glyphicon-tags" aria-hidden="true"></span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="expense: ${expenses}">
+                    <td th:text="*{#calendars.format(expense.date,'dd MMM yyyy')}">Date</td>
+                    <td th:text="*{#numbers.formatDecimal(expense.value, 1, 2)}">Value</td>
+                    <td th:text="${expense.category.name}">Category</td>
+                    <td th:text="${#strings.arrayJoin(expense.tags,', ')}">Tags</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Upload</div>
+        <div class="panel-body">
+            <form class="form-horizontal" action="#" th:action="@{/}" th:object="${expense}" method="post" >
+
+                <!-- Value -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="value"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span></label>
+                    <div class="col-sm-10">
+                        <input type="number" id="value" class="form-control" aria-label="Amount" th:field="*{value}" step="0.01"/>
+                    </div>
+                </div>
+
+                <!-- Category -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="category">Category</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="category" th:field="*{categoryCode}"/>
+                    </div>
+                </div>
+
+                <!-- Date -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="date">Date</label>
+                    <div class="col-sm-10">
+                        <input type="date" id="date" class="form-control" aria-label="Date" th:field="*{date}"/>
+                    </div>
+                </div>
+
+                <!-- Tags -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="tags"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span></label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="tags" th:field="*{tagCodes}" multiple="multiple"/>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="notes">Notes</label>
+                    <div class="col-sm-10">
+                        <textarea id="notes" class="form-control" aria-label="Notes" th:field="*{notes}"></textarea>
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <div class="form-group">
+                    <div class="btn-group col-sm-offset-2 col-sm-10" role="group">
+                        <button type="submit" class="btn btn-success">Add</button>
+                        <button type="reset" class="btn btn-default">Reset</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <div th:include="fragments/footer :: footer"></div>
+
+</body>
+</html>
