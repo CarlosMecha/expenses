@@ -1,0 +1,13 @@
+
+# Base
+source ~/.bash_profile
+ 
+# Basic commands
+alias bell='tput bel';
+
+# Aliases
+
+alias db-dev='psql -h localhost -U banking bank';
+
+export SERVER=cloud.cmecha.com
+
