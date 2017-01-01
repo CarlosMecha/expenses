@@ -30,9 +30,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().fullyAuthenticated();
+        http.authorizeRequests().anyRequest().authenticated();
         http.formLogin().loginPage("/login").usernameParameter("loginName").passwordParameter("password").defaultSuccessUrl("/").permitAll()
-                .and().logout().permitAll().logoutSuccessUrl("/login?logout").deleteCookies("remember-me").and().rememberMe();
+                .and().logout().permitAll().logoutSuccessUrl("/login?logout");
     }
 
     @Bean
