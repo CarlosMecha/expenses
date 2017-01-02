@@ -7,7 +7,7 @@
 ## Run
 
 ```bash
-java -jar bank-0.0.1-SNAPSHOT.jar > `date +%Y-%m-%d-%H-%M`.log
+java -jar bank-<version>-SNAPSHOT.jar > `date +%Y-%m-%d-%H-%M`.log
 ```
 
 ## Backups
@@ -15,5 +15,5 @@ java -jar bank-0.0.1-SNAPSHOT.jar > `date +%Y-%m-%d-%H-%M`.log
 ### Cron
 
 ```cron
-0 10 * * * pg_dump -T users -p $PGPORT -U $PGUSER --no-acl bank > `date +%Y-%m-%d-%H-%M`.bakup
+0 10 * * * /bin/bash backup.sh
 ```

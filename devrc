@@ -1,9 +1,6 @@
 
 # Base
-source ~/.bash_profile
- 
-# Basic commands
-alias bell='tput bel';
+source ~/.bashrc
 
 # Aliases
 
