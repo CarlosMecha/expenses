@@ -2,6 +2,20 @@
 
 
     web.init = function init() {
+
+        function now() {
+            var now = new Date();
+            var month = now.getMonth() + 1;
+            if(month < 10) {
+                month = "0" + month;
+            }
+            var day = now.getDate();
+            if(day < 10) {
+                day = "0" + day;
+            }
+            return [now.getFullYear(), month, day].join('-');
+        }
+
         var self = this;
         if(self.started) {
             return;
@@ -11,7 +25,7 @@
         self.activateNavigationLink("home");
 
         // Default date
-        self.jquery("#date").val((new Date()).toISOString().slice(0, 10));
+        self.jquery("#date").val(now());
 
         self.categories = [];
         self.tags = [];
