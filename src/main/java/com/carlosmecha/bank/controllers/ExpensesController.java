@@ -98,7 +98,9 @@ public class ExpensesController {
 
     private Set<String> stringToSet(String tags) {
         Set<String> set = new HashSet<>();
-        Collections.addAll(set, tags.split(","));
+        if(tags != null && !tags.isEmpty()) {
+            Collections.addAll(set, tags.split(","));
+        }
         return set;
     }
 
