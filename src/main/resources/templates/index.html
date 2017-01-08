@@ -25,26 +25,27 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">My last expenses</h3>
+            <h3 class="panel-title" th:text="${report.title} + ': ' +  *{#calendars.format(report.startDate,'dd MMM yyyy')} + ' - ' + *{#calendars.format(report.endDate,'dd MMM yyyy')}"></h3>
         </div>
         <table class="table">
             <thead>
                 <tr>
-                    <th>Date</th>
-                    <th><span class="glyphicon glyphicon-usd" aria-hidden="true"></span></th>
                     <th>Category</th>
-                    <th><span class="glyphicon glyphicon-tags" aria-hidden="true"></span></th>
+                    <th><span class="glyphicon glyphicon-usd" aria-hidden="true"></span></th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="expense: ${expenses}">
-                    <td th:text="*{#calendars.format(expense.date,'dd MMM yyyy')}">Date</td>
-                    <td th:text="*{#numbers.formatDecimal(expense.value, 1, 2)}">Value</td>
-                    <td th:text="${expense.category.name}">Category</td>
-                    <td th:text="${#strings.arrayJoin(expense.tags,', ')}">Tags</td>
+                <tr th:each="category: ${report.categories}">
+                    <td th:text="${category.key.name}">Category</td>
+                    <td th:text="*{#numbers.formatDecimal(category.value, 1, 2)}">0</td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td th:text="*{#numbers.formatDecimal(report.total, 1, 2)}">0</td>
                 </tr>
             </tbody>
         </table>
+        <div class="panel-footer" th:text="${#strings.arrayJoin(report.tags,', ')}"></div>
     </div>
 
     <div class="panel panel-default">

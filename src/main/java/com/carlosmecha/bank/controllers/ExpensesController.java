@@ -42,7 +42,7 @@ public class ExpensesController {
     }
 
     /**
-     * Shows a list of expenses and a form to create new ones.
+     * Shows this month report and a form to create a new expense.
      * @param model View model.
      * @param principal Authentication.
      * @return Template name.
@@ -50,10 +50,32 @@ public class ExpensesController {
     @GetMapping("/")
     public String index(Model model, Principal principal) {
         User user = getLoggerUser(principal);
+
+        Calendar date = Calendar.getInstance();
+        date.set(Calendar.DAY_OF_MONTH, 1);
+        Date startDate = date.getTime();
+        date = Calendar.getInstance();
+        date.set(Calendar.DAY_OF_MONTH, date.getActualMaximum(Calendar.DAY_OF_MONTH));
+        Date endDate = date.getTime();
+
         model.addAttribute("name", user.getName());
-        model.addAttribute("expenses", bank.getLatestExpenses(100));
+        model.addAttribute("report", bank.createBasicReport("Monthly", startDate, endDate));
         model.addAttribute("expense", new ExpenseForm());
         return "index";
+    }
+
+    /**
+     * Shows a list of expenses.
+     * @param model View model.
+     * @param principal Authentication.
+     * @return Template name.
+     */
+    @GetMapping("/latest")
+    public String getLatest(Model model, Principal principal) {
+        User user = getLoggerUser(principal);
+        model.addAttribute("name", user.getName());
+        model.addAttribute("expenses", bank.getLatestExpenses(100));
+        return "latest";
     }
 
     /**

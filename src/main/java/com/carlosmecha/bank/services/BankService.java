@@ -1,9 +1,6 @@
 package com.carlosmecha.bank.services;
 
-import com.carlosmecha.bank.models.Category;
-import com.carlosmecha.bank.models.Expense;
-import com.carlosmecha.bank.models.Tag;
-import com.carlosmecha.bank.models.User;
+import com.carlosmecha.bank.models.*;
 import com.carlosmecha.bank.repositories.CategoryRepository;
 import com.carlosmecha.bank.repositories.ExpenseRepository;
 import com.carlosmecha.bank.repositories.TagRepository;
@@ -132,6 +129,17 @@ public class BankService {
         Expense expense = new Expense(category, value, date, tagSet, note, requester);
         expenses.save(expense);
         return expense;
+    }
+
+    /**
+     * Creates a basic report with all expenses between two dates.
+     * @param title Report title.
+     * @param startDate Start date.
+     * @param endDate End date.
+     * @return Report.
+     */
+    public Report createBasicReport(String title, Date startDate, Date endDate) {
+        return new Report(title, startDate, endDate, expenses.findAllByDateRange(startDate, endDate));
     }
 
     /**
